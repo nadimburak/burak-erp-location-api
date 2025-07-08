@@ -1,4 +1,4 @@
-POST {{baseUrl}}location/cities
+POST {{baseUrl}}auth/cities
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 

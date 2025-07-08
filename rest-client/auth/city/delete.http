@@ -1,4 +1,4 @@
-DELETE {{baseUrl}}location/cities/68024a2690b9493bce5ffaee HTTP/1.1
+DELETE {{baseUrl}}auth/cities/68024a2690b9493bce5ffaee HTTP/1.1
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{accessToken}}

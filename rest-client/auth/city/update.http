@@ -1,4 +1,4 @@
-PUT {{baseUrl}}location/cities/68133cf3063880871694de59 HTTP/1.1
+PUT {{baseUrl}}auth/cities/68133cf3063880871694de59 HTTP/1.1
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{accessToken}}
