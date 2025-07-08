@@ -1,14 +1,11 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import path from 'path';
 import dotenv from 'dotenv';
 import mongoose, { ConnectOptions, Model } from 'mongoose';
 import routes from './routes';
 import { errorHandler, notFoundHandler } from './middlewares/error.middleware';
 import fs from 'fs-extra';
-import multer, { diskStorage } from 'multer';
-import { TEMP_DIR, UPLOAD_DIR } from './utils/file.util';
 
 
 // Load environment variables
@@ -35,16 +32,11 @@ class App {
   private readonly MONGO_URI: string;
   private isDBConnected: boolean;
   private TestModel: Model<ITest>;
-  private upload: multer.Multer;
-
 
   constructor() {
     this.app = express();
     this.MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/';
     this.isDBConnected = false;
-
-    // Initialize Multer
-    this.upload = this.configureMulter();
 
     // Initialize Test model schema
     const testSchema = new mongoose.Schema({
@@ -53,71 +45,10 @@ class App {
     });
     this.TestModel = mongoose.model<ITest>('Test', testSchema);
 
-    this.ensureDirectoriesExist();
     this.initializeMiddlewares();
     this.initializeDatabase();
     this.initializeRoutes();
     this.initializeErrorHandling();
-  }
-
-  private configureMulter(): multer.Multer {
-    // Add validation for required fields
-    const validateChunkUpload = (req: ChunkUploadRequest) => {
-      const { uploadId, chunkIndex } = req.body;
-      if (!uploadId || !chunkIndex) {
-        throw new Error('Missing required fields: uploadId and chunkIndex');
-      }
-    };
-
-    // Configure storage
-    const storage = diskStorage({
-      destination: async (req: ChunkUploadRequest, file, cb) => {
-        try {
-          validateChunkUpload(req);
-          const { uploadId } = req.body;
-          const chunkDir = path.join(TEMP_DIR, uploadId);
-          await fs.ensureDir(chunkDir);
-          cb(null, chunkDir);
-        } catch (err: any) {
-          cb(err, '');
-        }
-      },
-      filename: (req: ChunkUploadRequest, file, cb) => {
-        const { chunkIndex } = req.body;
-        cb(null, `${chunkIndex}.part`);
-      }
-    });
-
-    // File filter to allow only certain file types
-    const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
-      const allowedTypes = [
-        'image/jpeg',
-        'image/png',
-        'image/gif',
-        'application/pdf',
-        'application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-      ];
-
-      // Also check file extension
-      const ext = path.extname(file.originalname).toLowerCase();
-      const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.pdf', '.doc', '.docx'];
-
-      if (allowedTypes.includes(file.mimetype) && allowedExtensions.includes(ext)) {
-        cb(null, true);
-      } else {
-        cb(new Error('Invalid file type or extension'));
-      }
-    };
-
-    // Configure Multer instance
-    return multer({
-      storage,
-      fileFilter,
-      limits: {
-        fileSize: 10 * 1024 * 1024 // 10MB limit
-      }
-    });
   }
 
   private initializeMiddlewares(): void {
@@ -126,25 +57,11 @@ class App {
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(cors());
 
-    this.app.use('/uploads', express.static(UPLOAD_DIR));
-
     // Add request logging middleware
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       console.log(`${req.method} ${req.path}`);
       next();
     });
-  }
-
-  private async ensureDirectoriesExist(): Promise<void> {
-    try {
-      await fs.ensureDir(UPLOAD_DIR);
-      await fs.ensureDir(TEMP_DIR);
-      console.log(`Upload directory: ${UPLOAD_DIR}`);
-      console.log(`Temp directory: ${TEMP_DIR}`);
-    } catch (error) {
-      console.error('Failed to create directories:', error);
-      process.exit(1);
-    }
   }
 
 
