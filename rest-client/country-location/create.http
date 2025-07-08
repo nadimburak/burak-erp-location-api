@@ -1,0 +1,8 @@
+POST {{baseUrl}}location/countries 
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "name": "USA",
+    "status": true
+}

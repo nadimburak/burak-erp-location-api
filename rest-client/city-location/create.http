@@ -1,0 +1,10 @@
+POST {{baseUrl}}location/cities
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "country": "683835b41ec015ce1032ac0f",
+  "state" :"683835e11ec015ce1032ac11",
+  "name": "New York",
+  "status": true
+}

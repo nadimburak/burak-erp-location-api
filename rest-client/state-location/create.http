@@ -1,0 +1,9 @@
+POST {{baseUrl}}location/states
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "country": "683835b41ec015ce1032ac0f",
+  "name": "W.D.C.",
+  "status": true
+}

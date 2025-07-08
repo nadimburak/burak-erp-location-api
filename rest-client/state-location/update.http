@@ -1,0 +1,9 @@
+PUT {{baseUrl}}location/states/68024a0590b9493bce5ffaea HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "Branch",
+  "status": true
+}
