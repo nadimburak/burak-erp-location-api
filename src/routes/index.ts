@@ -23,8 +23,8 @@ app.get("/", (req: Request, res: Response) => {
 app.get("/seed", async (req: Request, res: Response) => {
   try {
     await CountrySeedDB();
-    await StateSeedDB();
-    await CitySeedDB();
+    // await StateSeedDB();
+    // await CitySeedDB();
     res.status(200).json({
       message: "✅Country, State, City",
     });

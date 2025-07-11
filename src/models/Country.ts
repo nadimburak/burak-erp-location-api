@@ -2,7 +2,9 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 
 // Interface for Country Document
 export interface ICountry extends Document {
-    name: string; // Surgen, Doctor, Nurse
+    name: string;
+    iso2: string;
+    iso3: string;
     description: string;
     status: boolean; // true or false
     created_at: Date;
@@ -15,6 +17,14 @@ const CountrySchema: Schema<ICountry> = new Schema(
         name: {
             type: String,
             required: true,
+        },
+        iso2: {
+            type: String,
+            required: false,
+        },
+        iso3: {
+            type: String,
+            required: false,
         },
         description: {
             type: String,

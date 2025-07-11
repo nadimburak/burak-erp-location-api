@@ -1,35 +1,15 @@
 import Country from "../models/Country";
 
+const countryData = require('../../public/countries.json');
+
 export const CountrySeedDB = async () => {
   try {
     // Optional: Clear existing countries
     await Country.deleteMany({});
     console.log("🗑️ Existing countries removed");
 
-    const countries = [
-      { name: "India" },
-      { name: "USA" },
-      { name: "United Kingdom" },
-      { name: "Canada" },
-      { name: "Australia" },
-      { name: "Germany" },
-      { name: "France" },
-      { name: "Italy" },
-      { name: "Spain" },
-      { name: "China" },
-      { name: "Japan" },
-      { name: "Russia" },
-      { name: "Brazil" },
-      { name: "South Africa" },
-      { name: "Mexico" },
-      { name: "Indonesia" },
-      { name: "Pakistan" },
-      { name: "Bangladesh" },
-      { name: "Saudi Arabia" },
-      { name: "United Arab Emirates" },
-    ];
-
-    const inserted = await Country.insertMany(countries);
+    console.log("countryData",countryData)
+    const inserted = await Country.insertMany(countryData);
 
     console.log(
       `✅ ${inserted.length} countries added:`,

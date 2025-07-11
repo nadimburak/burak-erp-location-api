@@ -5,8 +5,6 @@ import dotenv from 'dotenv';
 import mongoose, { ConnectOptions, Model } from 'mongoose';
 import routes from './routes';
 import { errorHandler, notFoundHandler } from './middlewares/error.middleware';
-import fs from 'fs-extra';
-
 
 // Load environment variables
 dotenv.config();
