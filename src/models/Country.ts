@@ -5,6 +5,19 @@ export interface ICountry extends Document {
     name: string;
     iso2: string;
     iso3: string;
+    numeric_code: string;
+    phone_code: string;
+    capital: string;
+    currency: string;
+    currency_name: string;
+    currency_symbol: string;
+    tld: string;
+    native: string;
+    region: string;
+    subregion: string;
+    nationality: string;
+    latitude: string;
+    longitude: string;
     description: string;
     status: boolean; // true or false
     created_at: Date;
@@ -23,6 +36,50 @@ const CountrySchema: Schema<ICountry> = new Schema(
             required: false,
         },
         iso3: {
+            type: String,
+            required: false,
+        },
+        numeric_code: {
+            type: String,
+            required: false,
+        },
+        phone_code: {
+            type: String,
+            required: false,
+        },
+        capital: {
+            type: String,
+            required: false,
+        },
+        currency: {
+            type: String,
+            required: false,
+        },
+        currency_name: {
+            type: String,
+            required: false,
+        },
+        currency_symbol: {
+            type: String,
+            required: false,
+        },
+        tld: {
+            type: String,
+            required: false,
+        },
+        native: {
+            type: String,
+            required: false,
+        },
+        region: {
+            type: String,
+            required: false,
+        },
+        subregion: {
+            type: String,
+            required: false,
+        },
+        nationality: {
             type: String,
             required: false,
         },
