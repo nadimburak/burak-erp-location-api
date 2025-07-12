@@ -26,6 +26,14 @@ const StateSchema: Schema<IState> = new Schema(
       type: String,
       required: true,
     },
+    state_code: {
+      type: String,
+      required: false,
+    },
+    type: {
+      type: String,
+      required: false,
+    },
     description: {
       type: String,
       required: false,
