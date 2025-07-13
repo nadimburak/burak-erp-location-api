@@ -1,7 +1,7 @@
 import State from "../models/State";
 import Country from "../models/Country";
 import City from "../models/City";
-const cityData = require('../../public/states.json');
+const cityData = require('../../public/cities.json');
 
 export const CitySeedDB = async () => {
   try {
@@ -16,9 +16,9 @@ export const CitySeedDB = async () => {
           console.warn(`⚠️ Country not found for code: ${element.country_code}`);
           return null;
         }
-        const state = await State.findOne({ state_code: element.state_code });
+        const state = await State.findOne({ state_name: element.state_name });
         if (!state) {
-          console.warn(`⚠️ State not found for code: ${element.state_code}`);
+          console.warn(`⚠️ State not found for name: ${element.state_name}`);
           return null;
         }
         return {
