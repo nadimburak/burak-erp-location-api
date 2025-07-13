@@ -1,7 +1,7 @@
 import State from "../models/State";
 import Country from "../models/Country";
 import City from "../models/City";
-const cityData = require('../../public/states.json');
+const cityData = require('../../public/cities.json');
 
 export const CitySeedDB = async () => {
   try {
