@@ -16,7 +16,7 @@ export const CitySeedDB = async () => {
           console.warn(`⚠️ Country not found for code: ${element.country_code}`);
           return null;
         }
-        const state = await State.findOne({ state_name: element.state_name });
+        const state = await State.findOne({ name: element.state_name });
         if (!state) {
           console.warn(`⚠️ State not found for name: ${element.state_name}`);
           return null;
